@@ -3,8 +3,6 @@ class Contact:
         self.contacts={}
         self.active=True
 
-    contacts = {}
-
     def add_contact(self):
         print("--------- إضافة جهة اتصال جديدة ---------")
 
