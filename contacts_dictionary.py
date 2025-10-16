@@ -30,13 +30,16 @@ def search_contact():
 
 def delete_contact_with_confirm():
     print("------- حذف جهة اتصال مع التأكيد -------")
-    name = input("أدخل اسم جهة الاتصال المراد حذفها او الرقم: ")
-    if name in contacts:
-        print(f"سيتم حذف الجهة التالية: الاسم: {name} - رقم الهاتف: {contacts[name]}")
+    name = input("أدخل اسم جهة الاتصال المراد حذفها أو الرقم: ").strip()
+    found = [n for n, p in contacts.items() if name == n or name == p]
+
+    if found:
+        contact_name = found[0]
+        print(f"سيتم حذف الجهة التالية: الاسم: {contact_name} - رقم الهاتف: {contacts[contact_name]}")
         while True:
-            confirmation = input("هل أنت متأكد من الحذف؟ (نعم/لا): ")
+            confirmation = input("هل أنت متأكد من الحذف؟ (نعم/لا): ").strip().lower()
             if confirmation == "نعم":
-                del contacts[name]
+                del contacts[contact_name]
                 print("تم حذف جهة الاتصال بنجاح.")
                 break
             elif confirmation == "لا":
@@ -45,7 +48,7 @@ def delete_contact_with_confirm():
             else:
                 print("الرجاء كتابة (نعم) أو (لا) فقط.")
     else:
-        print("الاسم غير موجود.")
+        print("الاسم أو الرقم غير موجود.")
 
 def show_contacts():
     print("------------ جميع جهات الاتصال ------------")
@@ -57,10 +60,13 @@ def show_contacts():
 
 def delete_contact_direct():
     print("-------- حذف جهة اتصال بدون تأكيد --------")
-    name = input("أدخل اسم جهة الاتصال أو الرقم المراد حذفه: ")
-    if name in contacts:
-        print(f"تم حذف الجهة التالية: الاسم: {name} - رقم الهاتف: {contacts[name]}")
-        del contacts[name]
+    name = input("أدخل اسم جهة الاتصال أو الرقم المراد حذفه: ").strip()
+    found = [n for n, p in contacts.items() if name == n or name == p]
+
+    if found:
+        contact_name = found[0]
+        print(f"تم حذف الجهة التالية: الاسم: {contact_name} - رقم الهاتف: {contacts[contact_name]}")
+        del contacts[contact_name]
     else:
         print("الاسم أو الرقم غير موجود.")
 

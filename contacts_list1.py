@@ -4,7 +4,7 @@ def add_contact():
     print("--------- إضافة جهة اتصال جديدة ---------")
     while True:
         name = input("أدخل اسم جهة الاتصال:")
-        duplicate = any([name.lower() == contact.split(" - ")[0].lower() for contact in contacts])
+        duplicate = any(name.lower() == contact.split(" - ")[0].lower() for contact in contacts)
         if duplicate:
             print("هذا الاسم موجود مسبقاً، الرجاء استخدام اسم آخر")
         else:
@@ -33,7 +33,8 @@ def search_contact():
 def delete_contact_with_confirm():
     print("------- حذف جهة اتصال مع التأكيد -------")
     delete_input = input("أدخل اسم جهة الاتصال المراد حذفها او الرقم: ").strip().lower()
-    matches = [contact for contact in contacts if delete_input == contact.split(" - ")[0].strip().lower()]
+    matches = [contact for contact in contacts if delete_input == contact.split(" - ")[0].strip().lower() or delete_input == contact.split(" - ")[1].strip()
+]
 
     if matches:
         contact = matches[0]
@@ -65,7 +66,8 @@ def delete_contact_direct():
     print("-------- حذف جهة اتصال بدون تأكيد --------")
     delete_input = input("أدخل اسم جهة الاتصال أو الرقم المراد حذفه: ").strip().lower()
 
-    matches = [contact for contact in contacts if delete_input == contact.split(" - ")[0].strip().lower()]
+    matches = [contact for contact in contacts if delete_input == contact.split(" - ")[0].strip().lower() or delete_input == contact.split(" - ")[1].strip()
+]
 
     if matches:
         contact = matches[0]

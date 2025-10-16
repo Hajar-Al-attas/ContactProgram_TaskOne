@@ -2,8 +2,7 @@ class Contact:
     def __init__(self):
         self.contacts={}
         self.active=True
-        self.contacts = {}
-        self.active = True
+
 
     def add_contact(self):
         print("--------- إضافة جهة اتصال جديدة ---------")
@@ -35,7 +34,11 @@ class Contact:
     def delete_contact_with_confirm(self):
         print("------- حذف جهة اتصال مع التأكيد -------")
         name = input("أدخل اسم جهة الاتصال المراد حذفها او الرقم: ")
-        if name in self.contacts:
+
+        found = [n for n, p in self.contacts.items() if name == n or name == p]
+
+        if found:
+            name = found[0]
             print(f"سيتم حذف الجهة التالية: الاسم: {name} - رقم الهاتف: {self.contacts[name]}")
             while True:
                 confirmation = input("هل أنت متأكد من الحذف؟ (نعم/لا): ")
@@ -49,7 +52,7 @@ class Contact:
                 else:
                     print("الرجاء كتابة (نعم) أو (لا) فقط.")
         else:
-            print("الاسم غير موجود.")
+            print("الاسم أو الرقم غير موجود.")
 
     def show_contacts(self):
         print("------------ جميع جهات الاتصال ------------")
@@ -62,7 +65,11 @@ class Contact:
     def delete_contact_direct(self):
         print("-------- حذف جهة اتصال بدون تأكيد --------")
         name = input("أدخل اسم جهة الاتصال أو الرقم المراد حذفه: ")
-        if name in self.contacts:
+
+        found = [n for n, p in self.contacts.items() if name == n or name == p]
+
+        if found:
+            name = found[0]
             print(f"تم حذف الجهة التالية: الاسم: {name} - رقم الهاتف: {self.contacts[name]}")
             del self.contacts[name]
         else:
