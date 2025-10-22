@@ -1,3 +1,5 @@
+import os
+clear = lambda: os.system('cls')
 class Contact:
     def __init__(self):
         self.contacts={}
@@ -6,7 +8,7 @@ class Contact:
     def __setitem__(self,name,phone):
             if name in self.contacts:
                 print("هذا الاسم موجود مسبقاً، الرجاء استخدام اسم آخر")
-            else:
+            else:          
                 if not phone.isdigit():
                     print("خطأ: رقم الهاتف يجب أن يحتوي على أرقام فقط.")
                 else:
@@ -14,7 +16,9 @@ class Contact:
                     print("تمت الإضافة بنجاح.")
 
     def __contains__(self, search):
-        found_contacts = [(name, phone)  for name, phone in self.contacts.items() if search.lower() in name.lower() or search in phone]
+        contacts = self.contacts
+        s_lower = search.lower()
+        found_contacts = [(n, p)  for n, p in contacts.items() if s_lower in n.lower() or search in p]
         if found_contacts:
             print("---------نتائج البحث----------")
             for name, phone in found_contacts:
@@ -38,6 +42,7 @@ class Contact:
             del self.contacts[key]
         else:
             print("الاسم أو الرقم غير موجود.")
+
 
     def delete_contact_with_confirm(self):
         print("------- حذف جهة اتصال مع التأكيد -------")
@@ -75,35 +80,47 @@ print("│  2. البحث عن جهة اتصال               │")
 print("│  3. حذف جهة اتصال مع التأكيد         │")
 print("│  4. عرض جميع جهات الاتصال             │")
 print("│  5. حذف جهة اتصال بدون تأكيد         │")
-print("│  6. الخروج                           │")
+print("│  6. مسح الشاشة                       │")
+print("│  7. الخروج                           │")
 print("└──────────────────────────────────────┘")
 
 while C.active:
-    choose = input("الرجاء اختيار رقم الخيار (1-6): ")
-    if choose == "1":
-        print("--------- إضافة جهة اتصال جديدة ---------")
-        while True:
-            name = input("أدخل اسم جهة الاتصال: ")
-            if name in C.contacts:
-                print("هذا الاسم موجود مسبقاً، الرجاء استخدام اسم آخر.")
+    choose = input("الرجاء اختيار رقم الخيار (1-7): ")
+    match choose:
+        case "1":
+            print("--------- إضافة جهة اتصال جديدة ---------")
+            while True:
+                name = input("أدخل اسم جهة الاتصال: ")
+                if name in C.contacts:
+                    print("هذا الاسم موجود مسبقاً، الرجاء استخدام اسم آخر.")
+                else:
+                    break
+            phone = input("أدخل رقم الهاتف: ")
+            C[name] = phone
+
+        case "2":
+            search = input("أدخل اسم جهة الاتصال أو الرقم للبحث: ")
+            if search in C:
+                print("تم العثور على جهة الاتصال.")
             else:
-                break
-        phone = input("أدخل رقم الهاتف: ")
-        C[name] = phone
-    elif choose == "2":
-        search = input("أدخل اسم جهة الاتصال أو الرقم للبحث: ")
-        if search in C:
-            print("تم العثور على جهة الاتصال.")
-        else:
-            print("لم يتم العثور على جهة الاتصال.")
-    elif choose == "3":
-        C.delete_contact_with_confirm()
-    elif choose == "4":
-        print(C)
-    elif choose == "5":
-        name = input("أدخل اسم جهة الاتصال المراد حذفها  : ")
-        del C[name]
-    elif choose == "6":
-        C.exit_program()
-    else:
-        print("خيار غير صحيح، الرجاء اختيار رقم من 1 إلى 6.")
+                print("لم يتم العثور على جهة الاتصال.")
+
+        case "3":
+            C.delete_contact_with_confirm()
+
+        case "4":
+            print(C)
+
+        case "5":
+            name = input("أدخل اسم جهة الاتصال المراد حذفها  : ")
+            del C[name]
+
+        case "6":
+            clear()
+
+        case "7":
+            C.exit_program()
+
+        case _:
+            print("خيار غير صحيح، الرجاء اختيار رقم من 1 إلى 7.")
+
